@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Open data etiquette",
+      "trigger": "PostToolUse",
+      "description": "After the agent edits a file, checks attribution, API usage limits and honest wording about the data.",
+      "matcher": "fs_write|str_replace|fs_append",
+      "action": {
+        "type": "agent",
+        "prompt": "If you just changed src/sources.ts or src/App.tsx: keep GBIF lookups behind mapLimit, keep 429 retries, never call Nominatim per keystroke, and keep OpenStreetMap, Wikidata, Wikipedia and GBIF credited in the UI. Never describe a species as extinct or gone for certain; say \"no longer recorded\". If you changed narration in src/story.ts, the fast-check properties in src/story.test.ts must still pass, including \"never contains null, NaN or undefined\"."
+      }
+    }
+  ]
+}

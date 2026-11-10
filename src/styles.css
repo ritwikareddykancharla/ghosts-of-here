@@ -1,0 +1,488 @@
+/* Ghosts of Here: moonlight, fog and old paper. */
+
+:root {
+  --night: #070a12;
+  --deep: #0d1322;
+  --panel: rgba(16, 23, 40, 0.82);
+  --line: #24304d;
+  --ghost: #e8f1ff;
+  --spirit: #9fd8ff;
+  --muted: #8d9bb8;
+  --ember: #ffb36b;
+  --bad: #ff8a80;
+  --serif: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font: 16px/1.55 var(--sans);
+  color: var(--ghost);
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 0%, rgba(159, 216, 255, 0.12), transparent 70%),
+    radial-gradient(ellipse 50% 50% at 0% 100%, rgba(255, 179, 107, 0.06), transparent 70%),
+    var(--night);
+}
+
+a {
+  color: var(--spirit);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.app {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
+}
+
+.fog {
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 30% 12% at 20% 70%, rgba(232, 241, 255, 0.05), transparent 70%),
+    radial-gradient(ellipse 35% 14% at 70% 85%, rgba(232, 241, 255, 0.05), transparent 70%),
+    radial-gradient(ellipse 25% 10% at 50% 40%, rgba(232, 241, 255, 0.03), transparent 70%);
+  animation: drift 50s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-5%);
+  }
+  to {
+    transform: translateX(5%);
+  }
+}
+
+.hero,
+.haunt,
+.foot {
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  margin: 0;
+  font: 600 clamp(48px, 9vw, 96px) / 0.95 var(--serif);
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 28px rgba(159, 216, 255, 0.55), 0 0 2px #fff;
+}
+
+.hero h1 span {
+  font-style: italic;
+  color: var(--spirit);
+}
+
+.lede {
+  max-width: 640px;
+  margin: 12px auto 20px;
+  font: italic 20px/1.4 var(--serif);
+  color: #c7d4ee;
+}
+
+.search {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.search input {
+  flex: 1 1 280px;
+  min-height: 46px;
+  padding: 10px 16px;
+  font: 16px var(--sans);
+  color: var(--ghost);
+  background: rgba(7, 10, 18, 0.8);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.btn {
+  min-height: 46px;
+  padding: 10px 20px;
+  font: 600 15px var(--sans);
+  color: var(--ghost);
+  background: rgba(16, 23, 40, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--spirit);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.btn.primary {
+  color: #061021;
+  background: var(--spirit);
+  border-color: var(--spirit);
+  box-shadow: 0 0 22px rgba(159, 216, 255, 0.35);
+}
+
+.link {
+  padding: 0;
+  font: inherit;
+  color: var(--spirit);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.chip {
+  padding: 6px 14px;
+  font: 14px var(--sans);
+  color: #c7d4ee;
+  background: transparent;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chip:hover,
+.chip.on {
+  color: var(--ghost);
+  border-style: solid;
+  border-color: var(--spirit);
+}
+
+.note {
+  color: var(--muted);
+}
+
+.note.bad {
+  color: var(--bad);
+}
+
+.haunt {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.left {
+  position: sticky;
+  top: 16px;
+}
+
+/* Map */
+
+.map {
+  position: relative;
+  aspect-ratio: 640 / 440;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #0b0f19;
+  box-shadow: 0 0 40px rgba(159, 216, 255, 0.08);
+}
+
+/* Standard OSM tiles turned into a moonlit night map. */
+.tile {
+  position: absolute;
+  user-select: none;
+  filter: invert(1) hue-rotate(195deg) saturate(0.35) brightness(0.8) contrast(0.95);
+}
+
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.search-ring {
+  fill: rgba(159, 216, 255, 0.04);
+  stroke: rgba(159, 216, 255, 0.45);
+  stroke-dasharray: 6 6;
+}
+
+.you {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  background: var(--ember);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(255, 179, 107, 0.25), 0 0 18px var(--ember);
+}
+
+.marker {
+  position: absolute;
+  width: 30px;
+  height: 34px;
+  margin: -30px 0 0 -15px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.2s;
+  animation: hover 3.5s ease-in-out infinite;
+}
+
+.marker svg {
+  width: 100%;
+  height: 100%;
+  fill: rgba(232, 241, 255, 0.88);
+  filter: drop-shadow(0 0 6px rgba(159, 216, 255, 0.8));
+}
+
+.marker span {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  right: 0;
+  font: 700 11px var(--sans);
+  color: #061021;
+  text-align: center;
+}
+
+.marker.active {
+  z-index: 2;
+  transform: scale(1.45);
+}
+
+.marker.active svg {
+  fill: #fff;
+  filter: drop-shadow(0 0 12px var(--spirit));
+}
+
+@keyframes hover {
+  50% {
+    translate: 0 -4px;
+  }
+}
+
+.attribution {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  margin: 0;
+  padding: 1px 6px;
+  font-size: 11px;
+  color: var(--muted);
+  background: rgba(7, 10, 18, 0.7);
+  border-radius: 4px;
+}
+
+.tour-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 0 10px;
+}
+
+.toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.caption {
+  min-height: 3.2em;
+  margin: 0;
+  padding: 14px 18px;
+  font: italic 21px/1.45 var(--serif);
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.caption.on {
+  color: var(--ghost);
+  border-color: rgba(159, 216, 255, 0.5);
+  text-shadow: 0 0 14px rgba(159, 216, 255, 0.4);
+}
+
+/* Cards */
+
+.right h2 {
+  margin: 0 0 12px;
+  font: 600 28px/1.15 var(--serif);
+}
+
+.wild-title {
+  margin-top: 28px !important;
+}
+
+.cards {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  padding: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card.active {
+  border-color: var(--spirit);
+  box-shadow: 0 0 24px rgba(159, 216, 255, 0.18);
+}
+
+.card img,
+.noimg {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 10px;
+  filter: grayscale(0.85) sepia(0.25) contrast(1.05);
+}
+
+.card.active img {
+  filter: none;
+}
+
+.noimg {
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  background: #121a2d;
+}
+
+.card-num {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 1;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  font: 700 12px/22px var(--sans);
+  color: #061021;
+  text-align: center;
+  background: var(--ghost);
+  border-radius: 11px;
+}
+
+.card h3 {
+  margin: 0;
+  font: 600 21px/1.2 var(--serif);
+}
+
+.card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.meta {
+  color: var(--muted);
+}
+
+.years {
+  color: var(--ember);
+  font-weight: 600;
+}
+
+.links {
+  display: flex;
+  gap: 14px;
+}
+
+.fineprint {
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.foot {
+  margin-top: 32px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .haunt {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .card {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .card img,
+  .noimg {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
